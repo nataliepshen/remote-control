@@ -1,11 +1,12 @@
 import WebSocket, { createWebSocketStream } from 'ws';
-import { moveMouseDown, moveMouseUp } from './navigation';
+import { drawCircle, drawRectangle, drawSquare } from './drawing';
+import { getMousePosition, moveMouseDown, moveMouseLeft, moveMouseRight, moveMouseUp } from './navigation';
 import { printScreen } from './printScreen';
 
 
 
-function connection(ws: WebSocket) {
-    const duplex = createWebSocketStream(ws, { decodeStrings: false });
+function connection(ws: WebSocket): void {
+    const duplex = createWebSocketStream(ws, { encoding: 'utf-8', decodeStrings: false });
     duplex.on('data', async (chunk: Buffer) => {
         try {
             console.log(chunk.toString());
@@ -19,7 +20,36 @@ function connection(ws: WebSocket) {
                     break;
                 case 'mouse_down':
                     moveMouseDown(width);
-                    duplex.write
+                    duplex.write(command);
+                    break;
+                case 'mouse_left':
+                    moveMouseLeft(width);
+                    duplex.write(command);
+                    break;
+                case 'mouse_right':
+                    moveMouseRight(width);
+                    duplex.write(command);
+                    break;
+                case 'mouse_position':
+                    const { x, y } = getMousePosition();
+                    duplex.write(`mouse_position ${x},${y}\0`);
+                    break;
+                case 'draw_circle':
+                    drawCircle(width);
+                    duplex.write(command);
+                    break;
+                case 'draw_rectangle':
+                    drawRectangle(width, length);
+                    duplex.write(command);
+                    break;
+                case 'draw_square':
+                    drawSquare(width);
+                    duplex.write(command);
+                    break;
+                case 'prnt_scrn':
+                    const base64 = await printScreen();
+                    duplex.write(`prnt_scrn ${base64}\0`);
+                    break;
             }
         } catch(err) {
             console.log(err);

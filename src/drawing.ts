@@ -1,7 +1,7 @@
 import robot from 'robotjs';
 
 function drawSquare(width: number): void {
-    const { x, y } = robot.getMousePos();
+    const { x, y }: { x: number, y: number} = robot.getMousePos();
     robot.mouseToggle('down');
     robot.moveMouseSmooth(x + width, y);
     robot.moveMouseSmooth(x + width, y + width);
@@ -11,7 +11,7 @@ function drawSquare(width: number): void {
 };
 
 function drawRectangle(width: number, length: number): void {
-    const { x, y } = robot.getMousePos();
+    const { x, y }: { x: number, y: number} = robot.getMousePos();
     robot.mouseToggle('down');
     robot.moveMouseSmooth(x + width, y);
     robot.moveMouseSmooth(x + width, y + length);
@@ -21,7 +21,7 @@ function drawRectangle(width: number, length: number): void {
 };
 
 function drawCircle(width: number): void {
-    const mousepos = robot.getMousePos();
+    const mousepos: { x: number, y: number} = robot.getMousePos();
     for (let i = 0; i <= Math.PI * 2; i += (0.01 * Math.PI)) {
         const x = mousepos.x + (width * Math.cos(i));
         const y = mousepos.y + (width * Math.sin(i));

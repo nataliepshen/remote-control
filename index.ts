@@ -13,8 +13,6 @@ const wss = new WebSocketServer({
     port: 8080,
 });
 
-const ws = new WebSocket('ws:/localhost');
-
 wss.on('connection', connection);
 
 console.log('WS server is running in port 8080');
