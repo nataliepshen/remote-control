@@ -17,7 +17,11 @@ module.exports = {
     'prettier'
   ],
   rules: {
-    "no-console": 1,
-    "prettier/prettier": 2
+    "no-console": 0,
+    "prettier/prettier": 2,
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "default-case": 0,
+    "no-shadow": 0
   },
 };
