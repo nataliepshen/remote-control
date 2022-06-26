@@ -1,7 +1,5 @@
 import {httpServer} from './src/http_server/index';
-import WebSocket, { WebSocketServer, createWebSocketStream } from 'ws';
-import { drawCircle, drawRectangle, drawSquare } from './src/drawing';
-import { printScreen } from './src/printScreen';
+import { WebSocketServer} from 'ws';
 import { connection } from './src/connection';
 
 const HTTP_PORT = 3000;
@@ -16,3 +14,9 @@ const wss = new WebSocketServer({
 wss.on('connection', connection);
 
 console.log('WS server is running in port 8080');
+
+process.on('SIGINT', () => {
+    console.log(`WS server closed.`);
+    wss.close();
+    process.exit();
+});
